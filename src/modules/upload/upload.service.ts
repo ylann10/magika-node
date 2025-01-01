@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { exec } from 'child_process';
 import { writeFile } from 'fs';
-import { MagikaResponseDto, MagikaResultDto } from 'src/dto/upload/magika.dto';
-import { UploadShortResponseDto } from 'src/dto/upload/upload.dto';
+import { MagikaResponseDto, MagikaResultDto } from 'src/dto/magika.dto';
 import * as tmp from 'tmp';
+import { UploadLongResponseDto, UploadShortResponseDto } from './dto/upload.dto';
 
 @Injectable()
 export class UploadService {
@@ -34,13 +34,9 @@ export class UploadService {
                 }
                 const response: MagikaResponseDto = JSON.parse(stdout)[0];
                 if (method === 'short') {
-                    const short: UploadShortResponseDto = new UploadShortResponseDto();
-                    short.group = response.output.group;
-                    short.mime_type = response.output.mime_type;
-                    short.score = response.output.score;
-                    resolve(short);
+                    resolve(new UploadShortResponseDto(response));
                 } else if (method === 'long') {
-                    resolve(response.output);
+                    resolve(new UploadLongResponseDto(response));
                 }
             });
         });
