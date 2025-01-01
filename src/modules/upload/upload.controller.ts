@@ -1,16 +1,24 @@
-import { Body, Controller, HttpCode, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, HttpCode, Post, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
-import { UploadOneBodyDto } from './dto/upload.dto';
+import { UploadLongResponseDto, UploadBodyDto, UploadShortResponseDto } from './dto/upload.dto';
 
 @Controller('upload')
 export class UploadController {
     constructor(private readonly uploadService: UploadService) {}
 
-    @Post('one')
+    @Post()
     @HttpCode(200)
-    @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: UploadOneBodyDto) {
-        return this.uploadService.uploadFile(file, body.method);
+    @UseInterceptors(FilesInterceptor('files'))
+    async uploadFiles(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: UploadBodyDto) {
+        const responses: UploadLongResponseDto | UploadShortResponseDto[] = [];
+        for (const file of files) {
+            await this.uploadService.uploadFile(file, body.method).then((res) => {
+                responses.push(res);
+            }, (err) => {
+                console.error(err);
+            });
+        }
+        return responses;
     }
 }
