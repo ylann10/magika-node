@@ -6,7 +6,7 @@ enum MethodEnum {
     LONG = 'long'
 }
 
-export class UploadOneBodyDto {
+export class UploadBodyDto {
     @IsNotEmpty()
     @IsEnum(MethodEnum)
     method: MethodEnum;
@@ -14,11 +14,15 @@ export class UploadOneBodyDto {
 
 export class UploadShortResponseDto {
 
-    constructor(response: MagikaResponseDto) {
+    constructor(response: MagikaResponseDto, filename: string) {
+        this.filename = filename;
         this.mime_type = response.output.mime_type;
         this.ct_label = response.output.ct_label;
-        this.score = response.output.score;
     }
+
+    @IsNotEmpty()
+    @IsString()
+    filename: string;
 
     @IsNotEmpty()
     @IsString()
@@ -28,14 +32,12 @@ export class UploadShortResponseDto {
     @IsString()
     ct_label: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    score: number;
 }
 
 export class UploadLongResponseDto {
 
-    constructor(response: MagikaResponseDto) {
+    constructor(response: MagikaResponseDto, filename: string) {
+        this.filename = filename;
         this.ct_label = response.output.ct_label;
         this.score = response.output.score;
         this.group = response.output.group;
@@ -43,6 +45,10 @@ export class UploadLongResponseDto {
         this.magic = response.output.magic;
         this.description = response.output.description;
     }
+
+    @IsNotEmpty()
+    @IsString()
+    filename: string;
 
     @IsString()
     @IsNotEmpty()

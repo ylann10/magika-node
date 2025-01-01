@@ -9,7 +9,7 @@ import { UploadLongResponseDto, UploadShortResponseDto } from './dto/upload.dto'
 export class UploadService {
     constructor() {}
 
-        async uploadFile(file: Express.Multer.File, method: string): Promise<MagikaResultDto | UploadShortResponseDto> {
+    async uploadFile(file: Express.Multer.File, method: string): Promise<UploadLongResponseDto | UploadShortResponseDto> {
         if (!file) {
             throw new BadRequestException('File is required');
         }
@@ -34,12 +34,11 @@ export class UploadService {
                 }
                 const response: MagikaResponseDto = JSON.parse(stdout)[0];
                 if (method === 'short') {
-                    resolve(new UploadShortResponseDto(response));
+                    resolve(new UploadShortResponseDto(response, file.originalname));
                 } else if (method === 'long') {
-                    resolve(new UploadLongResponseDto(response));
+                    resolve(new UploadLongResponseDto(response, file.originalname));
                 }
             });
         });
-
     }
 }
