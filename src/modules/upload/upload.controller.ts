@@ -1,7 +1,7 @@
-import { BadRequestException, Body, Controller, HttpCode, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadOneBodyDto } from 'src/dto/upload/upload.dto';
 import { UploadService } from './upload.service';
+import { UploadOneBodyDto } from './dto/upload.dto';
 
 @Controller('upload')
 export class UploadController {
