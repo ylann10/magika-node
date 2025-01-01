@@ -9,4 +9,6 @@ RUN pip3 install --upgrade pip
 RUN pip3 install magika
 RUN npm install
 
+EXPOSE 3000
+
 CMD ["node", "main"]
