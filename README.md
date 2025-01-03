@@ -1,11 +1,11 @@
 # MAGIKA-NODE
 
-## Prérequis
+## Prerequisites
 - Node v20.9.0 (LTS)
 - Python 3.13.1
 - Magika
 
-## Installation
+## Install
 
 ### Magika
 ```
@@ -17,16 +17,16 @@ python -m pip install magika
 npm install
 ```
 
-## Démarrage
-Par défaut, le serveur écoute sur le port 3000
+## Startup
+By default, the server listens on port 3000
 ```
 npm run start:prod
 ```
 
 ## Routes
 * POST http://localhost:3000/upload
-  * method: "**short**" ou "**long**"
-  * files: Liste de fichiers
+  * method: "**short**" or "**long**"
+  * files: File List
 
 ## Bonus
-Un Dockerfile est présent à la racine si vous voulez déployer le projet avec Docker
+A Dockerfile is present at the root if you want to deploy the project with Docker
