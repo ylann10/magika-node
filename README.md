@@ -24,7 +24,7 @@ npm run start:prod
 ```
 
 ## Routes
-* POST http://localhost:3000/api/upload
+* POST http://localhost:3000/upload
   * method: "**short**" ou "**long**"
   * files: Liste de fichiers
 
